@@ -13,12 +13,12 @@ app.use(cors());
 app.use(express.json());
 
 // Health check
-app.get('/api', (_req, res) => {
+app.get(['/', '/api'], (_req, res) => {
   res.json({ message: 'IDSnap AI backend is running!' });
 });
 
 /**
- * POST /api/generate-id-photo
+ * POST /api/generate-id-photo or /generate-id-photo
  * Body (multipart/form-data):
  *   - image: file
  *   - size: '3x4' | '4x6'
@@ -29,7 +29,7 @@ app.get('/api', (_req, res) => {
  * NOTE: This is a placeholder implementation using sharp for resizing/background.
  * Replace the processing logic with your AI model integration.
  */
-app.post('/api/generate-id-photo', upload.single('image'), async (req, res) => {
+app.post(['/generate-id-photo', '/api/generate-id-photo'], upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'Không tìm thấy file ảnh.' });
